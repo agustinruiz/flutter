@@ -1,7 +1,8 @@
 //import 'package:flutter/cupertino.dart'; cupertino son libreria mas personalizadas para IOS pero anda igual que material
 import 'package:flutter/material.dart';
 
-import 'package:my_app/screens/home_screen.dart';
+//import 'package:my_app/screens/home_screen.dart';
+import 'package:my_app/screens/counter_screen.dart';
 
 // Funcion principal por la cual comienza mi programa
 void main(){
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     // Se aconseja que sea el padre o el ancestro mas alto el que tenga la palabra const. el resto lo hereda
     return const MaterialApp( // tengo que devolver el widget a mostrar que es un encadenamiento de widgets
       debugShowCheckedModeBanner: false, // para sacar el banner de debug
-      home: HomeScreen()
+//      home: HomeScreen()
+      home: CounterScreen()
     );
   }
 }
