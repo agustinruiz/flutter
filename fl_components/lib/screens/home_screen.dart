@@ -1,3 +1,5 @@
+import 'package:fl_components/models/models.dart';
+import 'package:fl_components/router/app_routes.dart';
 import 'package:fl_components/screens/screens.dart';
 import 'package:flutter/material.dart';
 
@@ -7,15 +9,18 @@ class HomeScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    final menuOptions = AppRoutes.menuOptions;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Componentes en Flutter'),
         elevation: 0,
       ),
       body: ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-          leading: const Icon(Icons.access_time_outlined),
-          title: const Text('Nombre de ruta'),
+        itemBuilder: (context, i) => ListTile(
+          leading: Icon(menuOptions[i].icon),
+          title: Text(menuOptions[i].name),
           onTap: () {
             // Esta es una forma de llamar a otra pantalla
             // final route = MaterialPageRoute(
@@ -24,11 +29,11 @@ class HomeScreen extends StatelessWidget {
             // Navigator.push(context, route);
 
             // otra forma es usando pushNamed
-            Navigator.pushNamed(context, 'card2');
+            Navigator.pushNamed(context, menuOptions[i].route);
           },
         ),
         separatorBuilder: (_ , __) => const Divider(),
-        itemCount: 100)
+        itemCount: AppRoutes.menuOptions.length)
     );
   }
 }

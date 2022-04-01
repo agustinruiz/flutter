@@ -14,9 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      // home: const ListView2Screen(),
       initialRoute: AppRoutes.initialRoute,
-      routes: AppRoutes.routes,
+      routes: AppRoutes.getAppRoutes(),
       // Para trabajar con rutas creadas de manera dinamica (que no las tengo definidas):
       onGenerateRoute: AppRoutes.onGenerateRoute
     );
