@@ -8,18 +8,21 @@ class AppRoutes {
   static const initialRoute = 'home';
 
   static final menuOptions = <MenuOption>[
-    MenuOption(route: 'home', name: 'Home Screen', screen: const HomeScreen(), icon: Icons.home_filled),
+    // MenuOption(route: 'home', name: 'Home Screen', screen: const HomeScreen(), icon: Icons.home_filled),
     MenuOption(route: 'listview1', name: 'List View tipo 1', screen: const ListView1Screen(), icon: Icons.list_alt),
     MenuOption(route: 'listview2', name: 'List View tipo 2', screen: const ListView2Screen(), icon: Icons.list),
     MenuOption(route: 'alert', name: 'Alerts', screen: const AlertScreen(), icon: Icons.add_alert),
     MenuOption(route: 'card', name: 'Cards', screen: const CardScreen(), icon: Icons.credit_card),
     MenuOption(route: 'avatar', name: 'Circle Avatar', screen: const AvatarScreen(), icon: Icons.supervised_user_circle_outlined),
-    
+    MenuOption(route: 'animated', name: 'Animated Container', screen: const AnimatedScreen(), icon: Icons.play_circle_fill_outlined),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes(){
     // Inicializo la lista que contendra las rutas
     Map<String, Widget Function(BuildContext)> appRoutes = {};
+    // Pongo la ruta de la pagina de home para que se pueda volver
+    appRoutes.addAll({'home': (BuildContext context) => const HomeScreen()});
+
     // Cargo las rutas a la lista
     for (final option in menuOptions) {
       appRoutes.addAll({option.route: (BuildContext context) => option.screen});
