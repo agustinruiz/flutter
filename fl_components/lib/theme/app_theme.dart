@@ -34,6 +34,27 @@ class AppTheme {
           elevation: 0,
         ),
       ),
+
+      // Input Theme
+      inputDecorationTheme: const InputDecorationTheme(
+        floatingLabelStyle: TextStyle(color: primary),
+        
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primary),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), topRight: Radius.circular(10),)
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primary),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), topRight: Radius.circular(10),)
+        ),
+
+        border: OutlineInputBorder( // se aplica a todos los inputs que no esten habilitados y no especifiquen el border
+          borderSide: BorderSide(color: primary),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), topRight: Radius.circular(10),)
+        ),
+
+      ),
     );
 
   static final ThemeData darkTheme = ThemeData.dark().
