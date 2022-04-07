@@ -17,6 +17,7 @@ class AppRoutes {
     MenuOption(route: 'animated', name: 'Animated Container', screen: const AnimatedScreen(), icon: Icons.play_circle_fill_outlined),
     MenuOption(route: 'input', name: 'Text Inputs', screen: const InputsScreen(), icon: Icons.input_rounded),
     MenuOption(route: 'slider', name: 'Slider && Checks', screen: const SliderScreen(), icon: Icons.slow_motion_video_outlined),
+    MenuOption(route: 'listviewbuilder', name: 'Infinite Scroll && Pull to refresh', screen: const ListviewBuilderScreen(), icon: Icons.build_circle_outlined),
   ];
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes(){
