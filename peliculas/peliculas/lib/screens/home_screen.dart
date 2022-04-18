@@ -7,22 +7,26 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Peliculas en cines'),
+        title: const Text('Peliculas en cines'),
         elevation: 0,
         actions: [
           IconButton(
             onPressed: () {}, 
-            icon: Icon(Icons.search_outlined)
+            icon: const Icon(Icons.search_outlined)
           ),
         ],
       ),
-      body: Column(
-        children: [
-          CardSwiper(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            // Tarjetas principales
+            CardSwiper(),
 
-          // Listado horizontal de peliculas
-        ],
-      ),
+            // Listado horizontal de peliculas
+            MovieSlider(),
+          ],
+        ),
+      )
     );  
   }
 }
