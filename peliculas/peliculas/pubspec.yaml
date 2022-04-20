@@ -35,6 +35,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   card_swiper: ^2.0.3
+  http: ^0.13.4
+  provider: ^6.0.2 # provider es un gestor de estado. Se crea una instancia de una clase y puedo acceder a esa informacion desde cualquier widget utilizando el context
 
 dev_dependencies:
   flutter_test:
