@@ -38,7 +38,7 @@ class CardSwiper extends StatelessWidget {
           final movie = movies[index];
 
           return GestureDetector( // para poder detectar cuando alguien haga click (ontap)
-            onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-instance'), // navego a la otra pantalla (details)
+            onTap: () => Navigator.pushNamed(context, 'details', arguments: movie), // navego a la otra pantalla (details)
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20), // Para redondear los bordes
               child: FadeInImage(

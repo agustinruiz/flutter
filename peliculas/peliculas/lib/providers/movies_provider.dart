@@ -7,10 +7,13 @@ class MoviesProvider extends ChangeNotifier{
 
   final String _baseUrl = 'api.themoviedb.org';
   final String _apiKey = '7c6e238e2b573cca7093a37150f73316';
-  final String _lenguege = 'es-ES';
+  final String _language = 'es-ES';
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+
+  // mapa donde voy a ir guardando todos los actores de cada pelicula. int es el id de la pelicula. los dejo en memoria a medida que los necesito
+  Map<int, List<Cast>> moviesCast = {};
 
   int _popularPage = 0; // al ponerle _ especifico que es una propiedad privada
 
@@ -24,7 +27,7 @@ class MoviesProvider extends ChangeNotifier{
   Future<String> _getJsonData(String endpoint, [int page = 1]) async{
     var url = Uri.https( _baseUrl , endpoint, {
       'api_key': _apiKey,
-      'lenguege': _lenguege,
+      'language': _language,
       'page': '$page'
     });
 
@@ -59,6 +62,20 @@ class MoviesProvider extends ChangeNotifier{
 
     // Una vez que actualice los datos aviso a los listeners para que redibujen la pantalla
     notifyListeners(); // Notifica a los widgets
+  }
+
+  Future<List<Cast>> getMovieCast( int movieId) async {
+
+    if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+
+    final jsonData = await _getJsonData('/3/movie/$movieId/credits');
+    final creditsResponse = CreditsResponse.fromJson(jsonData);
+
+    // Lo guardo en memoria para no consultar en futuros detalles de la pelicula
+    moviesCast[movieId] = creditsResponse.cast;
+
+    return creditsResponse.cast;
+
   }
 
 }
