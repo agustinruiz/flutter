@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/models/models.dart';
+import 'package:peliculas/models/search_response.dart';
 
 // para que pueda ser un provider tiene que extender a ChangeNotifier
 class MoviesProvider extends ChangeNotifier{
@@ -76,6 +77,20 @@ class MoviesProvider extends ChangeNotifier{
 
     return creditsResponse.cast;
 
+  }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    final url = Uri.https( _baseUrl , '/3/search/movie', {
+      'api_key': _apiKey,
+      'language': _language,
+      'query': query
+    });
+
+    // Await the http get response, then decode the json-formatted response.
+    final response = await http.get(url);
+    final searchResponse = SearchResponse.fromJson(response.body);
+
+    return searchResponse.results;
   }
 
 }
