@@ -48,6 +48,7 @@ class MovieSearchDelegate extends SearchDelegate{
       );
   }
 
+  ///Esta funcion se llama cada vez que el usuario presione una tecla
   @override
   Widget buildSuggestions(BuildContext context) {
     if(query.isEmpty){ // query es el string que se va escribiendo en el buscador
@@ -55,9 +56,13 @@ class MovieSearchDelegate extends SearchDelegate{
     }
     // me traigo el provider o el servicio de movies para que vaya a buscar la info
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false); // listen en false para que no se pase redibujando de manera innecesaria
+    
+    moviesProvider.getSuggestionsByQuery(query); // obtengo las sugerencias en base al debouncer
 
-    return FutureBuilder(
-      future: moviesProvider.searchMovies(query),
+//    return FutureBuilder( cambio el future builder por un stream builder ya que necesito poder frenar su ejecucion dependiendo del bouncer
+//      future: moviesProvider.searchMovies(query),
+    return StreamBuilder( // El stream builder unicamente se redibujara cuando el moviesProvider.suggestionStream emite un valor
+      stream: moviesProvider.suggestionStream, // escucho el suggestions stream
       builder: (_, AsyncSnapshot<List<Movie>> snapshot) {
         if(!snapshot.hasData) return _emptyContainer();
 

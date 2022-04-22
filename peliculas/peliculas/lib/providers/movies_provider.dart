@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/helpers/debouncer.dart';
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/models/search_response.dart';
 
@@ -17,6 +20,16 @@ class MoviesProvider extends ChangeNotifier{
   Map<int, List<Cast>> moviesCast = {};
 
   int _popularPage = 0; // al ponerle _ especifico que es una propiedad privada
+
+  // Creo un debouncer de 500ms. o sea que si no se llamo al set value del debouncer se ejecuta la funcion onValue
+  final debouncer = Debouncer(
+    duration: const Duration(milliseconds: 500),
+  );
+
+  // el StreamController es como un Future que va a estar emitiendo valores. en este caso una lista de Movie
+  final StreamController<List<Movie>> _suggestionsStremController = StreamController.broadcast(); //hago el broadcast ya que muchos objetos pueden estar suscriptos a los cambios de este stream
+  Stream<List<Movie>> get suggestionStream => _suggestionsStremController.stream; // este es el stream que escuchare desde el stream builder
+
 
   MoviesProvider(){
     print('Movies provider inicializado');
@@ -93,4 +106,29 @@ class MoviesProvider extends ChangeNotifier{
     return searchResponse.results;
   }
 
+  // Metodo que mete el valor del quiery al stream cuando el debouncer emite (la persona deja de escribir)
+  // Este metodo se ejecuta cada vez que el usuario toca una tecla en el buscador.
+  void getSuggestionsByQuery(String searchTerm){
+
+    // inicializo el valor del debouncer en un string vacio
+    debouncer.value = '';
+    // la funcion asincrona que se llamara al pasar los 500ms sin que el usuario haga nada sera:
+    debouncer.onValue = (value) async {
+      // a los 500ms sin que el usuario no haga nada realizo la consulta http
+      final results = await searchMovies(value);
+      _suggestionsStremController.add(results); // le aviso al stream que los resultados cambiaron
+
+    };
+
+    // implemento un timer periodico para actualizar el valor del debouncer con lo que el usuario ingreso en el buscador
+    final timer = Timer.periodic(const Duration(milliseconds: 300), ( _ ) { 
+      debouncer.value = searchTerm; // a los 300ms el value se actualizara con el valor del searchTerm
+    });
+
+    // Tengo que cancelar el timer anterior si se vuelve a recibir un valor.
+    // Si pasan 301 milisegundos cancelo el timer anterior para que no se siga repitiendo cada 300ms
+    Future.delayed(const Duration(milliseconds: 301)).then(( _ ) => timer.cancel());
+  }
+
+//  Si el usuario deja de tocar, esta funcion se deja de llamar, se actualiza el valor, se cancela la periodicidad y a los 500ms se hace el query http.
 }
