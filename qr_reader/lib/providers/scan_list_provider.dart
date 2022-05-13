@@ -8,7 +8,7 @@ class ScanListProvider extends ChangeNotifier {
 
   String tipoSeleccionado = 'http';
 
-  nuevoScan(String valor) async {
+  Future<ScanModel> nuevoScan(String valor) async {
     // creo una instancia del nuevo scan
     final nuevoScan = new ScanModel(valor: valor);
     // Lo guardo en la base de datos
@@ -22,6 +22,8 @@ class ScanListProvider extends ChangeNotifier {
       // notifico a los widgets que se actualizo la lista de scans
       notifyListeners();
     }
+
+    return nuevoScan;
   }
 
   cargarScans() async {
@@ -32,7 +34,7 @@ class ScanListProvider extends ChangeNotifier {
 
   cargarScansPorTipo(String tipo) async {
     final scans = await DBProvider.db.getScansByType(tipo);
-    this.scans = [...?scans];
+    this.scans = [...scans];
     tipoSeleccionado = tipo;
     notifyListeners();
   }
