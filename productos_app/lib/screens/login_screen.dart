@@ -62,7 +62,7 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoratios.authInputDecoration(
+              decoration: InputDecorations.authInputDecoration(
                 hintText: 'john.doe@gmail.com',
                 labelText: 'Correo electronico',
                 prefixIcon: Icons.alternate_email_sharp,
@@ -83,7 +83,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               obscureText: true,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoratios.authInputDecoration(
+              decoration: InputDecorations.authInputDecoration(
                 hintText: '******',
                 labelText: 'Contraseña',
                 prefixIcon: Icons.lock_outline,
